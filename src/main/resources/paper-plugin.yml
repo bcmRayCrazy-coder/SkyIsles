@@ -1,0 +1,4 @@
+name: SkyIsles
+version: '${project.version}'
+main: site.hjfunny.skyisles.SkyIsles
+api-version: '1.20'
