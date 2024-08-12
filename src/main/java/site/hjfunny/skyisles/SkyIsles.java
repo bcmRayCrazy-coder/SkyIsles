@@ -1,8 +1,9 @@
 package site.hjfunny.skyisles;
 
-import org.bukkit.*;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.plexus.util.FileUtils;
+import site.hjfunny.skyisles.event.PlayerChangeWorld;
 import site.hjfunny.skyisles.game.GameManager;
 import site.hjfunny.skyisles.map.world.WorldManager;
 
@@ -34,8 +35,10 @@ public final class SkyIsles extends JavaPlugin {
         if (!worldFile.exists()) {
             createWorld("game");
         }
-        new GameManager(this);
 
+        getServer().getPluginManager().registerEvents(new PlayerChangeWorld(), this);
+
+        new GameManager(this);
     }
 
     @Override

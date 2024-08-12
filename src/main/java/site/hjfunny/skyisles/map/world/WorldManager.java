@@ -39,7 +39,7 @@ public class WorldManager {
         worldCreator.generator(new VoidChunkGenerator());
 
         final World world = worldCreator.createWorld();
-        if(world == null){
+        if (world == null) {
             throw new IllegalStateException("World is null");
         }
         world.setPVP(true);
@@ -53,9 +53,9 @@ public class WorldManager {
      * 重置世界
      *
      * @param worldName 世界名称
-     * @param zipName 压缩世界名称
+     * @param zipName   压缩世界名称
      */
-    public static void restoreWorld(String worldName,String zipName) {
+    public static void restoreWorld(String worldName, String zipName) {
         // 备份的世界, 原世界
         File zipWorld = new File(backupFolder, zipName + ".zip"),
                 originWorld = new File(Bukkit.getWorldContainer(), worldName);

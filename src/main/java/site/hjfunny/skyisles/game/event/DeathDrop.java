@@ -10,7 +10,7 @@ public class DeathDrop extends GameEventBase {
     }
 
     @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent event){
+    public void onPlayerDeath(PlayerDeathEvent event) {
 
     }
 }

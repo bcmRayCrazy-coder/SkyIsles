@@ -5,13 +5,16 @@ import site.hjfunny.skyisles.SkyIsles;
 import site.hjfunny.skyisles.game.event.DeathDrop;
 import site.hjfunny.skyisles.map.MapManager;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Objects;
+import java.util.Random;
+import java.util.Set;
 
 public class GameManager {
     private final SkyIsles plugin;
     private MapManager mapManager = new MapManager();
 
-    public HashMap<String, String> playersName = new HashMap<>();
+    public HashMap<String, String> players = new HashMap<>();
     public HashMap<String, Boolean> playersAlive = new HashMap<>();
     public HashMap<String, PlayerState> playersState = new HashMap<>();
 
@@ -40,7 +43,7 @@ public class GameManager {
     }
 
     private <T> T selectRandom(Set<T> set) throws IllegalStateException {
-        if(set.isEmpty()) throw new IllegalStateException("Set can't be empty");
+        if (set.isEmpty()) throw new IllegalStateException("Set can't be empty");
         int randomIndex = new Random().nextInt(set.size());
         int i = 0;
         for (T key : set) {

@@ -6,7 +6,7 @@ import site.hjfunny.skyisles.game.GameManager;
 public class GameEventBase implements Listener {
     public GameManager gameManager;
 
-    public GameEventBase(GameManager gameManager){
+    public GameEventBase(GameManager gameManager) {
         this.gameManager = gameManager;
     }
 }

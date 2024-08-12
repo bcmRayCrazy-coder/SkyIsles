@@ -11,5 +11,8 @@ public class IEvent extends Event {
     public @NotNull HandlerList getHandlers() {
         return HANDLERS;
     }
-    public static HandlerList getHandlerList(){return HANDLERS;}
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
+    }
 }

@@ -4,9 +4,9 @@ import java.io.File;
 
 public class FileUtil {
     public static void delete(File file) {
-        if(file.isDirectory()) {
+        if (file.isDirectory()) {
             //noinspection ConstantConditions
-            for(File subfile : file.listFiles()) {
+            for (File subfile : file.listFiles()) {
                 delete(subfile);
             }
         } else {
