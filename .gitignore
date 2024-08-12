@@ -111,3 +111,9 @@ buildNumber.properties
 
 # Common working directory
 run/
+
+# Test server
+test/
+
+# Draw.io backup
+*.drawio.bkp
