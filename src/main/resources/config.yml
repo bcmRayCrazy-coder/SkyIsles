@@ -4,13 +4,20 @@ debug: true
 # 地图列表
 # 请先将 地图存档/ 中的文件压缩为.zip格式文件 (不是压缩整个文件夹!)
 # 之后放在 plugins/SkyIsles/Backup/ 中, 再将文件名写在下方
-maps:
-  - Test:
+map:
+  # plugins/SkyIsles/Backuo/Test.zip
+  Test:
+      # 地图名称
       name: 测试地图
+      # 玩家出生点
       spawn: [8, -63, 8]
+      # 奖杯生成点
       itemSpawn:
         - [14, -63, -15]
         - [14, -63, -2]
         - [1, -64, -2]
         - [1, -64, -15]
+      # 奖杯目标箱子
       goal: [0, -63, -8]
+      # 虚空y坐标 (y坐标及以下均判定为虚空)
+      voidY: 0

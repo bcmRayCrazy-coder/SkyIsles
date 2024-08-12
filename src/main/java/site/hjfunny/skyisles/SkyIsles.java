@@ -3,7 +3,7 @@ package site.hjfunny.skyisles;
 import org.bukkit.*;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.codehaus.plexus.util.FileUtils;
-import site.hjfunny.skyisles.game.GameMain;
+import site.hjfunny.skyisles.game.GameManager;
 import site.hjfunny.skyisles.map.world.WorldManager;
 
 import java.io.File;
@@ -19,6 +19,8 @@ public final class SkyIsles extends JavaPlugin {
         LOGGER.logger = getLogger();
         plugin = this;
 
+        saveDefaultConfig();
+
         if (!WorldManager.backupFolder.exists()) {
             try {
                 FileUtils.forceMkdir(WorldManager.backupFolder);
@@ -32,12 +34,13 @@ public final class SkyIsles extends JavaPlugin {
         if (!worldFile.exists()) {
             createWorld("game");
         }
-        new GameMain(this);
+        new GameManager(this);
 
     }
 
     @Override
     public void onDisable() {
         Bukkit.getScheduler().cancelTasks(this);
+        saveConfig();
     }
 }

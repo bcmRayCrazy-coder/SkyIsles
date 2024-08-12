@@ -2,6 +2,6 @@ name: SkyIsles
 description: 天岛争霸小游戏插件
 authors: [bcmray, HECODE]
 website: http://mc.hjfunny.site
-version: '${project.version}'
+version: '1.0.0'
 main: site.hjfunny.skyisles.SkyIsles
 api-version: '1.20'
