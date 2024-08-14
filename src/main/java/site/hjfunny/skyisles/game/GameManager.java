@@ -3,6 +3,8 @@ package site.hjfunny.skyisles.game;
 import org.bukkit.Bukkit;
 import site.hjfunny.skyisles.SkyIsles;
 import site.hjfunny.skyisles.game.event.DeathDrop;
+import site.hjfunny.skyisles.game.event.JoinGame;
+import site.hjfunny.skyisles.game.event.LeaveGame;
 import site.hjfunny.skyisles.map.MapManager;
 
 import java.util.HashMap;
@@ -12,7 +14,7 @@ import java.util.Set;
 
 public class GameManager {
     private final SkyIsles plugin;
-    private MapManager mapManager = new MapManager();
+    private final MapManager mapManager = new MapManager();
 
     public HashMap<String, String> players = new HashMap<>();
     public HashMap<String, Boolean> playersAlive = new HashMap<>();
@@ -22,14 +24,21 @@ public class GameManager {
 
     public GameState gameState = GameState.WAITING;
     public GameConfig gameConfig;
+    public int countdown = 80;
 
     public GameManager(SkyIsles plugin) {
         this.plugin = plugin;
+
         Bukkit.getPluginManager().registerEvents(new DeathDrop(this), plugin);
+        Bukkit.getPluginManager().registerEvents(new JoinGame(this), plugin);
+        Bukkit.getPluginManager().registerEvents(new LeaveGame(this), plugin);
 
         resetMap();
     }
 
+    /**
+     * 重置随机地图
+     */
     public void resetMap() {
         Set<String> mapNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("map")).getKeys(false);
 
@@ -51,5 +60,17 @@ public class GameManager {
             i++;
         }
         return selectRandom(set);
+    }
+
+    /**
+     * 更改倒计时
+     * 若新倒计时大于目前倒计时, 更新无效
+     * 若需增加倒计时, 请直接修改countdown
+     *
+     * @param newCountdown 新倒计时
+     */
+    public void updateCountdown(int newCountdown) {
+        if (newCountdown > countdown) return;
+        countdown = newCountdown;
     }
 }

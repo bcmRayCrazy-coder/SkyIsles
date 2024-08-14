@@ -5,3 +5,13 @@ website: http://mc.hjfunny.site
 version: '1.0.0'
 main: site.hjfunny.skyisles.SkyIsles
 api-version: '1.20'
+
+commands:
+  join:
+    description: 加入游戏
+    usage: /join
+  quit:
+    description: 退出游戏
+    usage: /quit
+    aliases:
+      - leave
