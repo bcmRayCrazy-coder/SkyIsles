@@ -3,6 +3,7 @@ package site.hjfunny.skyisles.game;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import site.hjfunny.skyisles.SkyIsles;
+import site.hjfunny.skyisles.game.event.GameStateChangeEvent;
 import site.hjfunny.skyisles.game.handler.DeathDrop;
 import site.hjfunny.skyisles.game.handler.GameTickHandlerManager;
 import site.hjfunny.skyisles.game.handler.JoinGame;
@@ -28,7 +29,7 @@ public class GameManager {
     public Configuration gameConfig;
     public MapConfig mapConfig;
 
-    public int countdown = 80;
+    public int countdown = 0;
     public boolean ticking = false;
     private int tick = 0;
 
@@ -44,7 +45,7 @@ public class GameManager {
         ticker.start();
     }
 
-    private void registerHandlers(){
+    private void registerHandlers() {
         Bukkit.getPluginManager().registerEvents(new DeathDrop(this), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinGame(this), plugin);
         Bukkit.getPluginManager().registerEvents(new LeaveGame(this), plugin);
@@ -79,18 +80,6 @@ public class GameManager {
         return selectRandom(set);
     }
 
-    /**
-     * 更改倒计时
-     * 若新倒计时大于目前倒计时, 更新无效
-     * 若需增加倒计时, 请直接修改countdown
-     *
-     * @param newCountdown 新倒计时
-     */
-    public void updateCountdown(int newCountdown) {
-        if (newCountdown > countdown) return;
-        countdown = newCountdown;
-    }
-
     public int getTick() {
         return tick;
     }
@@ -104,6 +93,7 @@ public class GameManager {
     }
 
     public void setGameState(GameState gameState) {
+        Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(this.gameState, gameState));
         this.gameState = gameState;
     }
 }

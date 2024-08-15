@@ -4,6 +4,9 @@ debug: true
 # 开始游戏最少人数
 minPlayers: 2
 
+# 开始倒计时(0.1秒)
+startCountdown: 600
+
 # 地图列表
 # 请先将 地图存档/ 中的文件压缩为.zip格式文件 (不是压缩整个文件夹!)
 # 之后放在 plugins/SkyIsles/Backup/ 中, 再将文件名写在下方
