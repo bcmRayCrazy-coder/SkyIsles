@@ -4,8 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import site.hjfunny.skyisles.game.IEvent.PlayerJoinGameEvent;
-import site.hjfunny.skyisles.game.IEvent.PlayerLeaveGameEvent;
+import site.hjfunny.skyisles.game.event.PlayerJoinGameEvent;
+import site.hjfunny.skyisles.game.event.PlayerLeaveGameEvent;
 
 public class PlayerChangeWorld implements Listener {
     @EventHandler

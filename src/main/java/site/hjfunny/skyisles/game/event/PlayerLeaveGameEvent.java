@@ -1,8 +1,8 @@
-package site.hjfunny.skyisles.game.IEvent;
+package site.hjfunny.skyisles.game.event;
 
 import org.bukkit.entity.Player;
 
-public class PlayerLeaveGameEvent extends IEvent {
+public class PlayerLeaveGameEvent extends GameEventBase {
     private final Player player;
 
     public PlayerLeaveGameEvent(Player player) {

@@ -1,12 +1,12 @@
-package site.hjfunny.skyisles.game.event;
+package site.hjfunny.skyisles.game.handler;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import site.hjfunny.skyisles.game.GameManager;
-import site.hjfunny.skyisles.game.IEvent.PlayerLeaveGameEvent;
+import site.hjfunny.skyisles.game.event.PlayerLeaveGameEvent;
 
-public class LeaveGame extends GameEventBase {
+public class LeaveGame extends GameHandlerBase {
     public LeaveGame(GameManager gameManager) {
         super(gameManager);
     }

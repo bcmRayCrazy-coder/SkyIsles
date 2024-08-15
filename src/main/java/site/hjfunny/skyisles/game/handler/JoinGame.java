@@ -1,12 +1,12 @@
-package site.hjfunny.skyisles.game.event;
+package site.hjfunny.skyisles.game.handler;
 
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import site.hjfunny.skyisles.game.GameManager;
-import site.hjfunny.skyisles.game.IEvent.PlayerJoinGameEvent;
+import site.hjfunny.skyisles.game.event.PlayerJoinGameEvent;
 
-public class JoinGame extends GameEventBase {
+public class JoinGame extends GameHandlerBase {
     public JoinGame(GameManager gameManager) {
         super(gameManager);
     }

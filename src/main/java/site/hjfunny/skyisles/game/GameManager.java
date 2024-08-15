@@ -2,9 +2,10 @@ package site.hjfunny.skyisles.game;
 
 import org.bukkit.Bukkit;
 import site.hjfunny.skyisles.SkyIsles;
-import site.hjfunny.skyisles.game.event.DeathDrop;
-import site.hjfunny.skyisles.game.event.JoinGame;
-import site.hjfunny.skyisles.game.event.LeaveGame;
+import site.hjfunny.skyisles.game.handler.DeathDrop;
+import site.hjfunny.skyisles.game.handler.GameTickHandlerManager;
+import site.hjfunny.skyisles.game.handler.JoinGame;
+import site.hjfunny.skyisles.game.handler.LeaveGame;
 import site.hjfunny.skyisles.map.MapManager;
 
 import java.util.HashMap;
@@ -13,7 +14,7 @@ import java.util.Random;
 import java.util.Set;
 
 public class GameManager {
-    private final SkyIsles plugin;
+    public final SkyIsles plugin;
     private final MapManager mapManager = new MapManager();
 
     public HashMap<String, String> players = new HashMap<>();
@@ -24,16 +25,29 @@ public class GameManager {
 
     public GameState gameState = GameState.WAITING;
     public GameConfig gameConfig;
+
     public int countdown = 80;
+    public boolean ticking = false;
+    private int tick = 0;
 
     public GameManager(SkyIsles plugin) {
         this.plugin = plugin;
 
+        registerHandlers();
+
+        resetMap();
+
+        Ticker ticker = new Ticker(this);
+        ticker.start();
+    }
+
+    private void registerHandlers(){
         Bukkit.getPluginManager().registerEvents(new DeathDrop(this), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinGame(this), plugin);
         Bukkit.getPluginManager().registerEvents(new LeaveGame(this), plugin);
 
-        resetMap();
+        GameTickHandlerManager gameTickHandlerManager = new GameTickHandlerManager(this);
+        gameTickHandlerManager.register();
     }
 
     /**
@@ -72,5 +86,13 @@ public class GameManager {
     public void updateCountdown(int newCountdown) {
         if (newCountdown > countdown) return;
         countdown = newCountdown;
+    }
+
+    public int getTick() {
+        return tick;
+    }
+
+    public void setTick(int tick) {
+        this.tick = tick;
     }
 }

@@ -1,12 +1,18 @@
 package site.hjfunny.skyisles.game.event;
 
-import org.bukkit.event.Listener;
-import site.hjfunny.skyisles.game.GameManager;
+import org.bukkit.event.Event;
+import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
-public class GameEventBase implements Listener {
-    public GameManager gameManager;
+public class GameEventBase extends Event {
+    private static final HandlerList HANDLERS = new HandlerList();
 
-    public GameEventBase(GameManager gameManager) {
-        this.gameManager = gameManager;
+    @Override
+    public @NotNull HandlerList getHandlers() {
+        return HANDLERS;
+    }
+
+    public static HandlerList getHandlerList() {
+        return HANDLERS;
     }
 }

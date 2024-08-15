@@ -1,8 +1,8 @@
-package site.hjfunny.skyisles.game.IEvent;
+package site.hjfunny.skyisles.game.event;
 
 import org.bukkit.entity.Player;
 
-public class PlayerJoinGameEvent extends IEvent {
+public class PlayerJoinGameEvent extends GameEventBase {
     private final Player player;
 
     public PlayerJoinGameEvent(Player player) {
