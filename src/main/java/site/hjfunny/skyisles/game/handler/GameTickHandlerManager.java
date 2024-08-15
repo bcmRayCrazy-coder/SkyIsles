@@ -12,7 +12,6 @@ public class GameTickHandlerManager {
     }
 
     public void register(){
-        Bukkit.getPluginManager().registerEvents(new GameWaitingTick(gameManager),gameManager.plugin);
         Bukkit.getPluginManager().registerEvents(new GameStartingTick(gameManager),gameManager.plugin);
         Bukkit.getPluginManager().registerEvents(new GameRunningTick(gameManager),gameManager.plugin);
         Bukkit.getPluginManager().registerEvents(new GamePlayingTick(gameManager),gameManager.plugin);

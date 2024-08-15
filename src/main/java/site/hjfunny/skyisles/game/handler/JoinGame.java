@@ -4,6 +4,7 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import site.hjfunny.skyisles.game.GameManager;
+import site.hjfunny.skyisles.game.GameState;
 import site.hjfunny.skyisles.game.event.PlayerJoinGameEvent;
 
 public class JoinGame extends GameHandlerBase {
@@ -13,7 +14,7 @@ public class JoinGame extends GameHandlerBase {
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinGameEvent event) {
-        switch (gameManager.gameState) {
+        switch (gameManager.getGameState()) {
             case WAITING, STARTING -> joinGame(event.getPlayer());
             case RUNNING, PLAYING, ENDING -> spectateGame(event.getPlayer());
         }
@@ -21,6 +22,9 @@ public class JoinGame extends GameHandlerBase {
 
     private void joinGame(Player player) {
         gameManager.players.put(player.getUniqueId().toString(), player.getName());
+        if(gameManager.getGameState() == GameState.WAITING && gameManager.players.size() >= gameManager.gameConfig.getInt("minPlayers")){
+            gameManager.setGameState(GameState.STARTING);
+        }
     }
 
     private void spectateGame(Player player) {

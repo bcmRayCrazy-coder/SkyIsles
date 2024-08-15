@@ -13,6 +13,6 @@ public class GamePlayingTick extends GameHandlerBase {
 
     @EventHandler
     public void onTick(GameTickEvent event){
-        if(gameManager.gameState != GameState.PLAYING) return;
+        if(gameManager.getGameState() != GameState.PLAYING) return;
     }
 }

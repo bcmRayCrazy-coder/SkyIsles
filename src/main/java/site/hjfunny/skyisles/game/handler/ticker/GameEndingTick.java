@@ -13,6 +13,6 @@ public class GameEndingTick extends GameHandlerBase {
 
     @EventHandler
     public void onTick(GameTickEvent event){
-        if(gameManager.gameState != GameState.ENDING) return;
+        if(gameManager.getGameState() != GameState.ENDING) return;
     }
 }

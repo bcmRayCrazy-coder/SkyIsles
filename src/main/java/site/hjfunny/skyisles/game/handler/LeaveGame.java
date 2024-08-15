@@ -15,7 +15,7 @@ public class LeaveGame extends GameHandlerBase {
     public void onPlayerLeave(PlayerLeaveGameEvent event) {
         Player player = event.getPlayer();
         if (player.getGameMode() == GameMode.SPECTATOR) return;
-        switch (gameManager.gameState) {
+        switch (gameManager.getGameState()) {
             case WAITING, STARTING -> quitGame(player);
             case RUNNING, PLAYING -> playerDisconnect(player);
         }

@@ -1,6 +1,7 @@
 package site.hjfunny.skyisles.game;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.Configuration;
 import site.hjfunny.skyisles.SkyIsles;
 import site.hjfunny.skyisles.game.handler.DeathDrop;
 import site.hjfunny.skyisles.game.handler.GameTickHandlerManager;
@@ -23,8 +24,9 @@ public class GameManager {
 
     public String mapName;
 
-    public GameState gameState = GameState.WAITING;
-    public GameConfig gameConfig;
+    private GameState gameState = GameState.WAITING;
+    public Configuration gameConfig;
+    public MapConfig mapConfig;
 
     public int countdown = 80;
     public boolean ticking = false;
@@ -32,6 +34,7 @@ public class GameManager {
 
     public GameManager(SkyIsles plugin) {
         this.plugin = plugin;
+        this.gameConfig = plugin.getConfig();
 
         registerHandlers();
 
@@ -62,7 +65,7 @@ public class GameManager {
     }
 
     public void loadGameConfig() {
-        this.gameConfig = plugin.getConfig().getObject("map." + mapName, GameConfig.class);
+        this.mapConfig = plugin.getConfig().getObject("map." + mapName, MapConfig.class);
     }
 
     private <T> T selectRandom(Set<T> set) throws IllegalStateException {
@@ -94,5 +97,13 @@ public class GameManager {
 
     public void setTick(int tick) {
         this.tick = tick;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
     }
 }
