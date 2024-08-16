@@ -23,9 +23,8 @@ public final class SkyIsles extends JavaPlugin {
         LOGGER.logger = getLogger();
         plugin = this;
 
-        saveDefaultConfig();
-
         if (!WorldManager.backupFolder.exists()) {
+            saveDefaultConfig();
             try {
                 FileUtils.forceMkdir(WorldManager.backupFolder);
             } catch (IOException e) {

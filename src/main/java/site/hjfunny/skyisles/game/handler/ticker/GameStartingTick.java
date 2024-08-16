@@ -17,12 +17,15 @@ public class GameStartingTick extends GameHandlerBase {
     @EventHandler
     public void onTick(GameTickEvent event) {
         if (gameManager.getGameState() != GameState.STARTING) return;
+        if (gameManager.countdown == -1) return;
         gameManager.countdown -= 1;
-        if (gameManager.countdown >= 0) {
+        if (gameManager.countdown > 0) {
             if (gameManager.countdown % 100 == 0 || (gameManager.countdown <= 100 && gameManager.countdown % 10 == 0)) {
                 sendCountdown();
             }
         } else {
+            gameManager.countdown = -1;
+            gameManager.broadcast(Component.text("游戏开始").color(TextColor.color(0x00ee00)));
             gameManager.setGameState(GameState.RUNNING);
         }
     }
@@ -30,9 +33,9 @@ public class GameStartingTick extends GameHandlerBase {
     private void sendCountdown() {
         Component message = Component
                 .text("游戏将在 ").color(TextColor.color(0x00ee00))
-                .append(Component.text(gameManager.countdown).color(TextColor.color(0xffff00)))
+                .append(Component.text(gameManager.countdown / 10).color(TextColor.color(0xffff00)))
                 .append(Component.text(" 秒后开始").color(TextColor.color(0x00ee00)));
 
-        Bukkit.getServer().broadcast(message);
+        gameManager.broadcast(message);
     }
 }

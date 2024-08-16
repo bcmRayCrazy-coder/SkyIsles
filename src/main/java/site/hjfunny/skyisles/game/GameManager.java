@@ -1,16 +1,15 @@
 package site.hjfunny.skyisles.game;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import site.hjfunny.skyisles.LOGGER;
 import site.hjfunny.skyisles.SkyIsles;
 import site.hjfunny.skyisles.game.event.GameStateChangeEvent;
-import site.hjfunny.skyisles.game.handler.DeathDrop;
-import site.hjfunny.skyisles.game.handler.GameTickHandlerManager;
-import site.hjfunny.skyisles.game.handler.JoinGame;
-import site.hjfunny.skyisles.game.handler.LeaveGame;
+import site.hjfunny.skyisles.game.handler.*;
 import site.hjfunny.skyisles.map.MapManager;
 
 import java.util.*;
@@ -19,6 +18,7 @@ public class GameManager {
     public final SkyIsles plugin;
     private final MapManager mapManager = new MapManager();
 
+    // uid - name
     public HashMap<String, String> players = new HashMap<>();
     public HashMap<String, Boolean> playersAlive = new HashMap<>();
     public HashMap<String, PlayerState> playersState = new HashMap<>();
@@ -29,7 +29,7 @@ public class GameManager {
     public Configuration gameConfig;
     public MapConfig mapConfig;
 
-    public int countdown = 0;
+    public int countdown = -1;
     public boolean ticking = false;
     private int tick = 0;
 
@@ -46,6 +46,7 @@ public class GameManager {
     }
 
     private void registerHandlers() {
+        Bukkit.getPluginManager().registerEvents(new GameStateChange(this), plugin);
         Bukkit.getPluginManager().registerEvents(new DeathDrop(this), plugin);
         Bukkit.getPluginManager().registerEvents(new JoinGame(this), plugin);
         Bukkit.getPluginManager().registerEvents(new LeaveGame(this), plugin);
@@ -54,15 +55,26 @@ public class GameManager {
         gameTickHandlerManager.register();
     }
 
+    public void broadcast(Component message) {
+        for (String uid : players.keySet()) {
+            Player player = Bukkit.getPlayer(uid);
+            if (player != null) {
+                player.sendMessage(message);
+            }
+        }
+    }
+
     /**
      * 重置随机地图
      */
     public void resetMap() {
+        ticking = false;
         Set<String> mapNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("map")).getKeys(false);
 
         mapName = selectRandom(mapNames);
         loadGameConfig();
         mapManager.restoreMap(mapName);
+        ticking = true;
     }
 
     public void loadGameConfig() {
@@ -91,7 +103,7 @@ public class GameManager {
             List<Double> innerList = new ArrayList<>();
             for (Object _p : (List<?>) _itemSpawn) {
                 if (_p instanceof Integer) innerList.add(((Integer) _p).doubleValue());
-                else if (_p instanceof Double)innerList.add((Double) _p);
+                else if (_p instanceof Double) innerList.add((Double) _p);
                 else throw new IllegalStateException("Invalid map config itemSpawn type " + _p.getClass().getName());
             }
             itemSpawnList.add(innerList);
@@ -125,5 +137,6 @@ public class GameManager {
     public void setGameState(GameState gameState) {
         Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(this.gameState, gameState));
         this.gameState = gameState;
+        LOGGER.debug("Game state changed to " + gameState);
     }
 }

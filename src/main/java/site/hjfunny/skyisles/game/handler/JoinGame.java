@@ -1,5 +1,7 @@
 package site.hjfunny.skyisles.game.handler;
 
+import net.kyori.adventure.text.Component;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +24,7 @@ public class JoinGame extends GameHandlerBase {
 
     private void joinGame(Player player) {
         gameManager.players.put(player.getUniqueId().toString(), player.getName());
+        Bukkit.getServer().broadcast(Component.text("游戏人数" + gameManager.players.size()));
         if(gameManager.getGameState() == GameState.WAITING && gameManager.players.size() >= gameManager.gameConfig.getInt("minPlayers")){
             gameManager.setGameState(GameState.STARTING);
         }
