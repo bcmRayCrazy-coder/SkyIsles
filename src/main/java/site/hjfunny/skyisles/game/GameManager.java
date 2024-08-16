@@ -3,12 +3,16 @@ package site.hjfunny.skyisles.game;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import site.hjfunny.skyisles.LOGGER;
 import site.hjfunny.skyisles.SkyIsles;
+import site.hjfunny.skyisles.Util;
 import site.hjfunny.skyisles.game.event.GameStateChangeEvent;
 import site.hjfunny.skyisles.game.handler.*;
 import site.hjfunny.skyisles.map.MapManager;
@@ -29,6 +33,8 @@ public class GameManager {
     private GameState gameState = GameState.WAITING;
     public Configuration gameConfig;
     public MapConfig mapConfig;
+
+    public Entity targetItem;
 
     public int countdown = -1;
     public boolean ticking = false;
@@ -90,7 +96,7 @@ public class GameManager {
         ticking = false;
         Set<String> mapNames = Objects.requireNonNull(plugin.getConfig().getConfigurationSection("map")).getKeys(false);
 
-        mapName = selectRandom(mapNames);
+        mapName = Util.selectRandom(mapNames);
         loadGameConfig();
         mapManager.restoreMap(mapName);
         ticking = true;
@@ -112,7 +118,7 @@ public class GameManager {
                 originMapConfig.getIntegerList("goal"),
                 originMapConfig.getDouble("voidY"));
 
-        LOGGER.debug(String.format("Loaded Map Config:\nName: %s\nvoidY: %s", mapConfig.name, mapConfig.voidY));
+        LOGGER.debug(String.format("Loaded Map Config:\nName: %s\nvoidY: %s\nItemSpawnSize: %s", mapConfig.name, mapConfig.voidY, mapConfig.itemSpawn.size()));
     }
 
     private static @NotNull List<List<Double>> getPositionList(List<?> _itemSpawnList) {
@@ -128,17 +134,6 @@ public class GameManager {
             itemSpawnList.add(innerList);
         }
         return itemSpawnList;
-    }
-
-    private <T> T selectRandom(Set<T> set) throws IllegalStateException {
-        if (set.isEmpty()) throw new IllegalStateException("Set can't be empty");
-        int randomIndex = new Random().nextInt(set.size());
-        int i = 0;
-        for (T key : set) {
-            if (i == randomIndex) return key;
-            i++;
-        }
-        return selectRandom(set);
     }
 
     public <T> void setGamePlayers(HashMap<String, T> map, T value) {
@@ -163,5 +158,9 @@ public class GameManager {
         Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(this.gameState, gameState));
         this.gameState = gameState;
         LOGGER.debug("Game state changed to " + gameState);
+    }
+
+    public @Nullable World getWorld() {
+        return Bukkit.getWorld("game");
     }
 }
