@@ -24,7 +24,7 @@ public class GameRunningTick extends GameHandlerBase {
             }
         } else {
             gameManager.countdown = -1;
-            gameManager.setGameState(GameState.RUNNING);
+            gameManager.setGameState(GameState.PLAYING);
         }
     }
 

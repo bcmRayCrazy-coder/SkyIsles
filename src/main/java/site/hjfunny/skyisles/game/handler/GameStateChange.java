@@ -18,6 +18,7 @@ import site.hjfunny.skyisles.game.event.GameStateChangeEvent;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 
 public class GameStateChange extends GameHandlerBase {
     public GameStateChange(GameManager gameManager) {
@@ -41,7 +42,7 @@ public class GameStateChange extends GameHandlerBase {
                 gameManager.setGamePlayers(gameManager.playersState, PlayerState.PLAYING);
 
                 for (String uid : gameManager.players.keySet()) {
-                    Player player = Bukkit.getPlayer(uid);
+                    Player player = Bukkit.getPlayer(UUID.fromString(uid));
                     if (player != null) {
                         player.setGameMode(GameMode.ADVENTURE);
                     }
@@ -58,7 +59,7 @@ public class GameStateChange extends GameHandlerBase {
                 gameManager.countdown = gameManager.gameConfig.getInt("countdown.end");
 
                 for (String uid : gameManager.players.keySet()) {
-                    Player player = Bukkit.getPlayer(uid);
+                    Player player = Bukkit.getPlayer(UUID.fromString(uid));
                     if (player != null) {
                         PlayerState playerState = gameManager.playersState.get(uid);
                         if (playerState != PlayerState.WIN) player.setGameMode(GameMode.SPECTATOR);

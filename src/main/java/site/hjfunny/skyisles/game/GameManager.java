@@ -64,7 +64,7 @@ public class GameManager {
 
     public void broadcast(Component message) {
         for (String uid : players.keySet()) {
-            Player player = Bukkit.getPlayer(uid);
+            Player player = Bukkit.getPlayer(UUID.fromString(uid));
             if (player != null) {
                 player.sendMessage(message);
             }
@@ -73,7 +73,7 @@ public class GameManager {
 
     public void sendTitle(Component title, Component subTitle, Title.Times times) {
         for (String uid : players.keySet()) {
-            Player player = Bukkit.getPlayer(uid);
+            Player player = Bukkit.getPlayer(UUID.fromString(uid));
             if (player != null) {
                 player.showTitle(Title.title(title, subTitle, times));
             }
@@ -82,7 +82,7 @@ public class GameManager {
 
     public void sendTitle(Component title) {
         for (String uid : players.keySet()) {
-            Player player = Bukkit.getPlayer(uid);
+            Player player = Bukkit.getPlayer(UUID.fromString(uid));
             if (player != null) {
                 player.showTitle(Title.title(title, Component.empty()));
             }
@@ -157,7 +157,7 @@ public class GameManager {
     public void setGameState(GameState gameState) {
         Bukkit.getPluginManager().callEvent(new GameStateChangeEvent(this.gameState, gameState));
         this.gameState = gameState;
-        LOGGER.debug("Game state changed to " + gameState);
+        LOGGER.debug("Game state changed to " + this.gameState);
     }
 
     public @Nullable World getWorld() {
