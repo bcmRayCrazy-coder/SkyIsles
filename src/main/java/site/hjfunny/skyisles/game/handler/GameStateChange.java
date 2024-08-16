@@ -2,6 +2,7 @@ package site.hjfunny.skyisles.game.handler;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -27,6 +28,7 @@ public class GameStateChange extends GameHandlerBase {
 
             case STARTING -> gameManager.countdown = gameManager.gameConfig.getInt("countdown.start");
             case RUNNING -> {
+                gameManager.sendTitle(Component.text(gameManager.gameConfig.getString("title.run","")));
                 gameManager.countdown = gameManager.gameConfig.getInt("countdown.run");
                 gameManager.broadcast(Component.text(gameManager.gameConfig.getInt("tip.run")));
                 gameManager.setGamePlayers(gameManager.playersState, PlayerState.PLAYING);
@@ -39,6 +41,8 @@ public class GameStateChange extends GameHandlerBase {
                 }
             }
             case PLAYING -> {
+                onPlaying();
+                gameManager.sendTitle(Component.text(gameManager.gameConfig.getString("title.play","")));
                 gameManager.countdown = gameManager.gameConfig.getInt("countdown.play");
                 gameManager.broadcast(Component.text(gameManager.gameConfig.getInt("tip.play")));
                 gameManager.setGamePlayers(gameManager.playersRemainingRespawnTimes,gameManager.gameConfig.getInt("respawnTimes"));
@@ -56,5 +60,9 @@ public class GameStateChange extends GameHandlerBase {
                 }
             }
         }
+    }
+
+    private void onPlaying(){
+
     }
 }

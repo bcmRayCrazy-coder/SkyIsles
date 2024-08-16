@@ -1,6 +1,7 @@
 package site.hjfunny.skyisles.game;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.ConfigurationSection;
@@ -60,6 +61,24 @@ public class GameManager {
             Player player = Bukkit.getPlayer(uid);
             if (player != null) {
                 player.sendMessage(message);
+            }
+        }
+    }
+
+    public void sendTitle(Component title, Component subTitle, Title.Times times) {
+        for (String uid : players.keySet()) {
+            Player player = Bukkit.getPlayer(uid);
+            if (player != null) {
+                player.showTitle(Title.title(title, subTitle, times));
+            }
+        }
+    }
+
+    public void sendTitle(Component title) {
+        for (String uid : players.keySet()) {
+            Player player = Bukkit.getPlayer(uid);
+            if (player != null) {
+                player.showTitle(Title.title(title, Component.empty()));
             }
         }
     }
