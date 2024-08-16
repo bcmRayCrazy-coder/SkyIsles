@@ -20,7 +20,7 @@ public class GameManager {
 
     // uid - name
     public HashMap<String, String> players = new HashMap<>();
-    public HashMap<String, Boolean> playersAlive = new HashMap<>();
+    public HashMap<String, Integer> playersRemainingRespawnTimes = new HashMap<>();
     public HashMap<String, PlayerState> playersState = new HashMap<>();
 
     public String mapName;
@@ -120,6 +120,12 @@ public class GameManager {
             i++;
         }
         return selectRandom(set);
+    }
+
+    public <T> void setGamePlayers(HashMap<String, T> map, T value) {
+        for (String uid : players.keySet()) {
+            map.put(uid, value);
+        }
     }
 
     public int getTick() {

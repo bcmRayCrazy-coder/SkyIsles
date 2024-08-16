@@ -4,8 +4,32 @@ debug: true
 # 开始游戏最少人数
 minPlayers: 2
 
-# 开始倒计时(0.1秒)
-startCountdown: 600
+# 重生机会
+respawnTimes: 3
+
+# 倒计时(0.1秒)
+countdown:
+  start: 600
+  run: 100
+  play: 1200
+  end: 100
+
+# 标题
+title:
+  run: 分散
+  play: 抢金块
+  die: 剩余生命 {0}
+  end:
+    win: 胜利!
+    defeat: 失败~
+    die: 阵亡~
+
+# 提示
+tip:
+  run: 请在10s内分散开, 尽可能容易拿到金块并防止被玩家击杀
+  play: 与玩家pvp同时, 抢[高亮的金块]并将它放到[高亮的箱子]里! 若拿着金块的人死亡, 金块将掉落, 若对方在虚空, 金块将回到生成点
+  canRespawn: [❤]
+  usedRespawn: ❤
 
 # 地图列表
 # 请先将 地图存档/ 中的文件压缩为.zip格式文件 (不是压缩整个文件夹!)

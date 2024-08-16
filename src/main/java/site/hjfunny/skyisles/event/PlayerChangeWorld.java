@@ -1,6 +1,7 @@
 package site.hjfunny.skyisles.event;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
@@ -16,6 +17,10 @@ public class PlayerChangeWorld implements Listener {
             Bukkit.getPluginManager().callEvent(new PlayerJoinGameEvent(event.getPlayer()));
         } else if (event.getFrom().getName().equals("game")) {
             Bukkit.getPluginManager().callEvent(new PlayerLeaveGameEvent(event.getPlayer()));
+        }
+
+        if (event.getPlayer().getWorld().getName().equals("world")) {
+            event.getPlayer().setGameMode(GameMode.ADVENTURE);
         }
     }
 }

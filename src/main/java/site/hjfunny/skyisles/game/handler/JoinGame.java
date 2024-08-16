@@ -31,7 +31,7 @@ public class JoinGame extends GameHandlerBase {
     }
 
     private void spectateGame(Player player) {
-        if (gameManager.players.get(player.getUniqueId().toString()) != null && gameManager.playersAlive.get(player.getUniqueId().toString())) {
+        if (gameManager.players.get(player.getUniqueId().toString()) != null && gameManager.playersRemainingRespawnTimes.get(player.getUniqueId().toString()) <= 0) {
             playerReconnect(player);
             return;
         }
